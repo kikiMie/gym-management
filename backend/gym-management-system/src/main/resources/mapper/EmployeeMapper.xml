@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gym.gymmanagementsystem.mapper.EmployeeMapper">
+<!--    id是和接口里的方法是对应的         返回类型：数字Int类型-->
+    <select id="selectTotalCount" resultType="java.lang.Integer">
+    SELECT count(*)
+    FROM employee
+    </select>
+<!--    id查询方法名，-->
+    <select id="findAll" resultType="Employee">
+    SELECT *
+    FROM employee
+    </select>
+<!--   parameterType,sql语句的各种属性，   它有get方法获取到   这些属性，对应实体类中的属性，获取属性值，使用#{}-->
+    <insert id="insertEmployee" parameterType="Employee">
+        INSERT INTO employee (employee_account, employee_name, employee_gender,
+                              employee_age, entry_time, staff, employee_message)
+        VALUES (#{employeeAccount}, #{employeeName}, #{employeeGender},
+                #{employeeAge}, #{entryTime}, #{staff}, #{employeeMessage})
+
+    </insert>
+
+    <delete id="deleteByEmployeeAccount" parameterType="java.lang.Integer">
+        DELETE
+        FROM employee
+        WHERE employee_account = #{employeeAccount}
+    </delete>
+
+    <update id="updateMemberByEmployeeAccount" parameterType="employee">
+        UPDATE employee
+        SET employee_account = #{employeeAccount},
+            employee_name    = #{employeeName},
+            employee_gender  = #{employeeGender},
+            employee_age     = #{employeeAge},
+            staff            = #{staff},
+            employee_message=#{employeeMessage}
+        WHERE employee_account = #{employeeAccount}
+    </update>
+
+    <select id="selectByEmployeeAccount" parameterType="java.lang.Integer" resultType="employee">
+        SELECT *
+        FROM employee
+        WHERE employee_account = #{employeeAccount}
+    </select>
+</mapper>
